@@ -225,9 +225,9 @@
     <Compile Include="Assets\Scripts\Event System\EventListener.cs" />
     <Compile Include="Assets\Scripts\Event System\Events\Event.cs" />
     <Compile Include="Assets\Scripts\Event System\EventSystem.cs" />
-    <Compile Include="Assets\Scripts\Meme.cs" />
     <Compile Include="Assets\Scripts\MemeLauncher.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMover.cs" />
+    <Compile Include="Assets\Scripts\ProjectileMover.cs" />
     <Compile Include="Assets\Scripts\Utility\Timer.cs" />
     <Compile Include="Assets\Scripts\Utility\Utility.cs" />
   </ItemGroup>

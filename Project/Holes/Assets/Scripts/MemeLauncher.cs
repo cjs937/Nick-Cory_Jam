@@ -5,7 +5,10 @@ using UnityEngine;
 public class MemeLauncher : MonoBehaviour
 { 
     public float fireRate;
-    public GameObject meme;
+    public float fireSpeed;
+    public float projectileGravity;
+
+    public GameObject memePrefab;
 
     BoxCollider2D hitBox;
     string timerTag = "launch";
@@ -37,13 +40,17 @@ public class MemeLauncher : MonoBehaviour
 
     void fireMeme()
     {
-        Vector2 firePos = getPointAlongHitbox();
+        Vector2 firePos = getPointAlongHitbox();//new Vector2(transform.position.x, getPointAlongHitbox().y);
 
-        GameObject newMeme = Instantiate(meme, transform.parent);
-
-        newMeme.transform.position = firePos;
+        GameObject newMeme = Instantiate(memePrefab, transform.parent);
 
         newMeme.transform.rotation = transform.rotation;
+
+        ProjectileMover newMover = newMeme.AddComponent<ProjectileMover>();
+
+        float angleOfElevation = transform.rotation.eulerAngles.z;
+
+        newMover.init(firePos, fireSpeed, projectileGravity, angleOfElevation);
     }
 
     Vector2 getPointAlongHitbox()
@@ -58,6 +65,8 @@ public class MemeLauncher : MonoBehaviour
         Vector2 B = new Vector2(hitBox.bounds.min.x, hitBox.bounds.max.y);
 
         float randT = Random.Range(0.0f, 1.0f);
+
+        //randT = .1f;
 
         return A + (B - A) * randT;
     }

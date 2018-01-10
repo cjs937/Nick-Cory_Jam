@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MemeLauncher : MonoBehaviour
-{ 
+{
     public float fireRate;
     public float fireSpeed;
     public float projectileGravity;

@@ -45,7 +45,7 @@ public class ProjectileMover : MonoBehaviour
 
         newPos.x += (initSpeed * Mathf.Cos(angle)) * t;
 
-        newPos.y += initHeight + (initSpeed * Mathf.Sin(angle) * t) - 0.5f * gravity * (t * t);
+        newPos.y += initSpeed * Mathf.Sin(angle) * t - 0.5f * gravity * (t * t);
 
         currentT = getNextT();
 
@@ -54,6 +54,6 @@ public class ProjectileMover : MonoBehaviour
 
     float getNextT()
     {
-        return currentT + .1f;// Time.deltaTime;
+        return currentT + Time.deltaTime;
     }
 }

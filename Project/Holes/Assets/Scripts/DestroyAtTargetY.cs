@@ -9,7 +9,7 @@ public class DestroyAtTargetY : MonoBehaviour {
 	{ 
 		if (transform.position.y < TargetYToDestroyAt) 
 		{
-			print(this.name + " is destroying " + gameObject.name);
+			//print(this.name + " is destroying " + gameObject.name);
 			Destroy(gameObject); 
 		} 
 	}

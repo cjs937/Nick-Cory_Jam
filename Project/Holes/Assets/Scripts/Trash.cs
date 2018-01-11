@@ -20,8 +20,8 @@ public class Trash : MonoBehaviour
     {
 		if(playerInRange && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            player.throwAwayTop();
-            trashedCount++;
+            if(player.throwAwayTop())
+                trashedCount++;
         }
 	}
 

@@ -33,16 +33,18 @@ public class MemeCatcher : MonoBehaviour
     }
 
     //throw away meme on top
-    public void throwAwayTop()
+    public bool throwAwayTop()
     {
         if (heldMemes.Count == 0)
-            return;
+            return false;
 
         Destroy(heldMemes.Peek().gameObject);
 
         heldMemes.Pop();
 
         updateCarryPosition();
+
+        return true;
     }
 
     void catchMeme(Meme _caughtMeme)
@@ -69,11 +71,11 @@ public class MemeCatcher : MonoBehaviour
 
         if (heldMemes.Count == 0)
         {
-            newCarryY = transform.position.y + carryOffset;
+            newCarryY = hitBox.bounds.max.y + carryOffset;
         }
         else
         {
-            newCarryY = heldMemes.Peek().transform.position.y + carryOffset;
+            newCarryY = heldMemes.Peek().hitBox.bounds.max.y + carryOffset;
         }
 
         carryPosition.position = new Vector2(transform.position.x, newCarryY);

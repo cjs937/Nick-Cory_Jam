@@ -4,16 +4,33 @@ using UnityEngine;
 
 public class Meme : MonoBehaviour
 {
+    public string memeFolderPath;
+
+    [HideInInspector]
+    public BoxCollider2D hitBox;
+
+    SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        hitBox = GetComponent<BoxCollider2D>();
+
+        loadRandomSprite();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void loadRandomSprite()
+    {
+        Sprite[] sprites = Resources.LoadAll<Sprite>(memeFolderPath);
+
+        if (sprites.Length == 0)
+            return;
+
+        int randSpriteIndex = Random.Range(0, sprites.Length - 1);
+
+        spriteRenderer.sprite = sprites[randSpriteIndex];
+    }
 
     public void onCatch(MemeCatcher _catcher)
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MemeCatcher : MonoBehaviour
+public class MemeCatcher : MonoBehaviour, IListener
 {
     //position where caught memes will go
     public Transform carryPosition;
@@ -12,6 +12,15 @@ public class MemeCatcher : MonoBehaviour
 
     //Distance above player that memes increment by
     public float carryOffset;
+
+    public void handleEvent(Event _event)
+    {
+        if(_event.type == EventType.PLAYER_HIT)
+        {
+            dropAllMemes();
+        }
+    }
+
 
     private void Start()
     {
@@ -52,17 +61,20 @@ public class MemeCatcher : MonoBehaviour
         if (heldMemes.Contains(_caughtMeme))
             return;
 
-        _caughtMeme.onCatch(this);
+        if (_caughtMeme.onCatch(this))
+        {
+            _caughtMeme.transform.position = carryPosition.position;
 
-        _caughtMeme.transform.position = carryPosition.position;
+            _caughtMeme.transform.rotation = Quaternion.Euler(Vector3.zero);
 
-        _caughtMeme.transform.rotation = Quaternion.Euler(Vector3.zero);
+            _caughtMeme.transform.parent = transform;
 
-        _caughtMeme.transform.parent = transform;
+            heldMemes.Push(_caughtMeme);
 
-        heldMemes.Push(_caughtMeme);
-
-        updateCarryPosition();
+            updateCarryPosition();
+        }
+        else
+            dropAllMemes();
     }
 
     void updateCarryPosition()
@@ -79,5 +91,22 @@ public class MemeCatcher : MonoBehaviour
         }
 
         carryPosition.position = new Vector2(transform.position.x, newCarryY);
+    }
+
+    void dropAllMemes()
+    {
+        while(heldMemes.Count > 0)
+        {
+            Meme droppedMemeScript = heldMemes.Pop();
+            GameObject memeObject = droppedMemeScript.gameObject;
+
+            Destroy(droppedMemeScript);
+
+            Rigidbody2D newRB = memeObject.AddComponent<Rigidbody2D>();
+
+            memeObject.transform.SetParent(null);
+        }
+
+        updateCarryPosition();
     }
 }

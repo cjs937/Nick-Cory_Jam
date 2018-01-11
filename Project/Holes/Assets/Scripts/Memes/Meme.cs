@@ -24,8 +24,6 @@ public class Meme : MonoBehaviour
     {
         Sprite[] sprites = Resources.LoadAll<Sprite>(spriteFolderPath);
 
-		print(sprites.Length);
-
         if (sprites.Length == 0)
             return;
 
@@ -34,7 +32,7 @@ public class Meme : MonoBehaviour
         spriteRenderer.sprite = sprites[randSpriteIndex];
     }
 
-    public virtual void onCatch(MemeCatcher _catcher)
+    public virtual bool onCatch(MemeCatcher _catcher)
     {
         ProjectileMover mover = GetComponent<ProjectileMover>();
 
@@ -42,5 +40,7 @@ public class Meme : MonoBehaviour
         {
             Destroy(mover);
         }
+
+        return true;
     }
 }

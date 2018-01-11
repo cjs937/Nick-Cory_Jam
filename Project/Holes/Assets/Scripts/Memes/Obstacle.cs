@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoodThing : Meme
+public class Obstacle : Meme
 {
-    public override void onCatch(MemeCatcher _catcher)
+    public override bool onCatch(MemeCatcher _catcher)
     {
         base.onCatch(_catcher);
 
         EventSystem.dispatchEvent(new Event(EventType.PLAYER_HIT));
+
+        Destroy(gameObject);
+
+        return false;
     }
 }

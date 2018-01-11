@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Meme : MonoBehaviour
 {
-    public string memeFolderPath;
+    public string spriteFolderPath;
 
     [HideInInspector]
     public BoxCollider2D hitBox;
@@ -22,7 +22,7 @@ public class Meme : MonoBehaviour
 	
     void loadRandomSprite()
     {
-        Sprite[] sprites = Resources.LoadAll<Sprite>(memeFolderPath);
+        Sprite[] sprites = Resources.LoadAll<Sprite>(spriteFolderPath);
 
         if (sprites.Length == 0)
             return;
@@ -32,7 +32,7 @@ public class Meme : MonoBehaviour
         spriteRenderer.sprite = sprites[randSpriteIndex];
     }
 
-    public void onCatch(MemeCatcher _catcher)
+    public virtual void onCatch(MemeCatcher _catcher)
     {
         ProjectileMover mover = GetComponent<ProjectileMover>();
 

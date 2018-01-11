@@ -16,6 +16,8 @@ public class PlayerMover : MonoBehaviour
     float currentSpeed;
     Rigidbody2D physics = null;
 
+    BoxCollider2D hitBox = null;
+
     private void OnDrawGizmosSelected()
     {
         Vector3 cubeSize = new Vector3(1, 1, 1);
@@ -29,18 +31,28 @@ public class PlayerMover : MonoBehaviour
     void Start ()
     {
         physics = GetComponent<Rigidbody2D>();
+        hitBox = GetComponent<BoxCollider2D>();
         currentSpeed = baseSpeed;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        lerpToMouse();	
+        //if (Input.GetKey(KeyCode.Mouse0) && Utility.checkInBounds(Utility.getMousePosition(), hitBox))
+        //{
+            lerpToMouse();
+            //snapToMouse();
+        //}
 	}
+
+    void snapToMouse()
+    {
+        transform.position = new Vector2(Utility.getMousePosition().x, transform.position.y);
+    }
 
     void lerpToMouse()
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+        Vector2 mousePos = Utility.getMousePosition();
 
         float newX = transform.position.x;
 

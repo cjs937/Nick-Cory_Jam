@@ -4,7 +4,11 @@ using UnityEngine;
 
 public enum EventType
 {
-	NONE = -1
+	NONE = -1,
+    PLAYER_HIT,
+    MEME_TRASHED,
+    MEME_FALL,
+    GAME_OVER
 }
 
 public class Event

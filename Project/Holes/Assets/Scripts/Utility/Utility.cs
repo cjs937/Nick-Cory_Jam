@@ -69,6 +69,23 @@ public class Utility : MonoBehaviour
         return new Vector2(x, y);
     }
 
+    //Checks if point is inside collider's bounds
+    public static bool checkInBounds(Vector2 _point, BoxCollider2D _collider)
+    {
+        Vector2 boxMin = _collider.bounds.min;
+        Vector2 boxMax = _collider.bounds.max;
+
+        if(boxMin.x <= _point.x && _point.x <= boxMax.x)
+        {
+            if(boxMin.y <= _point.y && _point.y <= boxMax.y)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static bool isOffScreen(Vector2 _position)
     {
         Vector2 screenMin = getScreenMin();

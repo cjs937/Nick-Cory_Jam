@@ -291,6 +291,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ScoreKeeperScript.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioPlayer.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioSystem.cs" />
     <Compile Include="Assets\Scripts\Audio\DestroyOnAudioStop.cs" />

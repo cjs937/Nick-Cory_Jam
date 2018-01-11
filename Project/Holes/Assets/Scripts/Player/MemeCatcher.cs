@@ -7,6 +7,7 @@ public class MemeCatcher : MonoBehaviour
     //position where caught memes will go
     public Transform carryPosition;
 
+    Stack<Meme> heldMemes;
     BoxCollider2D hitBox;
 
     //Distance above player that memes increment by
@@ -14,16 +15,12 @@ public class MemeCatcher : MonoBehaviour
 
     private void Start()
     {
+        heldMemes = new Stack<Meme>();
+
         hitBox = GetComponent<BoxCollider2D>();
 
-        carryPosition.position = new Vector2(transform.position.x, hitBox.bounds.max.y + carryOffset);
+        updateCarryPosition();
     }
-
-    // Update is called once per frame
-    void Update ()
-    {
-		
-	}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -35,8 +32,24 @@ public class MemeCatcher : MonoBehaviour
         catchMeme(caughtMeme);
     }
 
+    //throw away meme on top
+    public void throwAwayTop()
+    {
+        if (heldMemes.Count == 0)
+            return;
+
+        Destroy(heldMemes.Peek().gameObject);
+
+        heldMemes.Pop();
+
+        updateCarryPosition();
+    }
+
     void catchMeme(Meme _caughtMeme)
     {
+        if (heldMemes.Contains(_caughtMeme))
+            return;
+
         _caughtMeme.onCatch(this);
 
         _caughtMeme.transform.position = carryPosition.position;
@@ -45,7 +58,24 @@ public class MemeCatcher : MonoBehaviour
 
         _caughtMeme.transform.parent = transform;
 
-        //increment carry position
-        carryPosition.position = new Vector2(transform.position.x, carryPosition.position.y + carryOffset);
+        heldMemes.Push(_caughtMeme);
+
+        updateCarryPosition();
+    }
+
+    void updateCarryPosition()
+    {
+        float newCarryY;
+
+        if (heldMemes.Count == 0)
+        {
+            newCarryY = transform.position.y + carryOffset;
+        }
+        else
+        {
+            newCarryY = heldMemes.Peek().transform.position.y + carryOffset;
+        }
+
+        carryPosition.position = new Vector2(transform.position.x, newCarryY);
     }
 }

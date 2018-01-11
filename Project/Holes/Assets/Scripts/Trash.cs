@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Trash : MonoBehaviour
 {
     public MemeCatcher player;
     public int trashedCount;
 
     bool playerInRange = false;
+
+	public ScoreKeeperScript Score;
 
 	// Use this for initialization
 	void Start ()
@@ -21,7 +24,10 @@ public class Trash : MonoBehaviour
 		if(playerInRange && Input.GetKeyDown(KeyCode.Mouse0))
         {
             if(player.throwAwayTop())
+			{
                 trashedCount++;
+				Score.IncrementScore();  //can add a float in the argument for a custom val
+			}
         }
 	}
 

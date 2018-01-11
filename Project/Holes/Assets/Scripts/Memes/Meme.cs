@@ -24,6 +24,8 @@ public class Meme : MonoBehaviour
     {
         Sprite[] sprites = Resources.LoadAll<Sprite>(spriteFolderPath);
 
+		print(sprites.Length);
+
         if (sprites.Length == 0)
             return;
 

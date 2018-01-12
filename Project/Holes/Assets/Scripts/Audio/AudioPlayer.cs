@@ -20,7 +20,7 @@ public class AudioPlayer : MonoBehaviour
 
         audioSource.volume = _volume;
 
-        audioSource.loop = _looped = isLooped;
+        audioSource.loop = isLooped = _looped;
 
         audioSource.Play();
     }

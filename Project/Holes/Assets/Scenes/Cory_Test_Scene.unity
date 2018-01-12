@@ -333,10 +333,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 500
+  minSpeed: 100
   clampPositions:
   - {x: -5.67, y: 0}
   - {x: 5.7, y: 0}
-  speedDecreasePercent: 0
+  speedDecreasePercent: 10
+  currentSpeed: 0
 --- !u!114 &622299574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e2e8586cbc98f409d7f62904ebfd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memeLimit: 4
   carryPosition: {fileID: 1775118522}
   carryOffset: 0.5
 --- !u!1 &1206562135
@@ -465,7 +468,6 @@ GameObject:
   - component: {fileID: 1271157126}
   - component: {fileID: 1271157127}
   - component: {fileID: 1271157128}
-  - component: {fileID: 1271157129}
   m_Layer: 0
   m_Name: TheGarbage
   m_TagString: Untagged
@@ -567,89 +569,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 622299574}
-  trashSound: {fileID: 8300000, guid: ba2b7322a1273c94e86f928cbc2a227e, type: 3}
   trashedCount: 0
   Score: {fileID: 1206562137}
---- !u!82 &1271157129
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1271157124}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!1 &1569864614
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +801,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1812705090}
   - component: {fileID: 1812705091}
+  - component: {fileID: 1812705093}
+  - component: {fileID: 1812705092}
   m_Layer: 0
   m_Name: SceneRoot
   m_TagString: Untagged
@@ -917,6 +840,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 624bf16f6f9c1444498056d575d40f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1812705092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1812705089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2065b8326418b1b47844585dd6f0cb2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - audioType: 0
+    audioClip: {fileID: 8300000, guid: ba2b7322a1273c94e86f928cbc2a227e, type: 3}
+  - audioType: 1
+    audioClip: {fileID: 8300000, guid: 55b6d36290f92f04594c4dc4933d2fbb, type: 3}
+  mainAudioSource: {fileID: 0}
+--- !u!114 &1812705093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1812705089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0190709b950961647945a56525f88518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1955333314
@@ -991,12 +942,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dewit: 0
+  difficultyIncreaseDelay: 10
+  maxDifficulty: 7
   fireRate: 1
   fireSpeed: 10
   projectileGravity: 31
   memePrefab: {fileID: 1691854558366552, guid: 2c3780b2a3330c44c90d2ea105c2a673, type: 2}
   obstaclePrefab: {fileID: 1379886666012510, guid: c7e3a3a0748fe3245b6e65831ef6fbef,
     type: 2}
+  difficultyLevel: 1
 --- !u!61 &2108609655
 BoxCollider2D:
   m_ObjectHideFlags: 0

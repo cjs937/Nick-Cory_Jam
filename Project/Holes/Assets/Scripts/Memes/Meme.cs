@@ -9,7 +9,7 @@ public class Meme : MonoBehaviour
     [HideInInspector]
     public BoxCollider2D hitBox;
 
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
 	void Start ()

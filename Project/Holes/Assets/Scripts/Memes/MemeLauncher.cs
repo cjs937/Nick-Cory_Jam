@@ -6,6 +6,9 @@ public class MemeLauncher : MonoBehaviour
 {
     public bool dewit;
 
+    public float difficultyIncreaseDelay;
+    public int maxDifficulty;
+
     public float fireRate;
     public float fireSpeed;
     public float projectileGravity;
@@ -13,36 +16,60 @@ public class MemeLauncher : MonoBehaviour
     public GameObject memePrefab;
     public GameObject obstaclePrefab;
 
+    public int difficultyLevel = 1;
+
     BoxCollider2D hitBox;
-    string timerTag = "launch";
-    Timer launchTimer;
+    string difficultyDelayTag = "diffDelay";
+    string launchTimerTag = "launch";
+    Timer timer;
     
 
     void Start ()
     {
 
         hitBox = GetComponent<BoxCollider2D>();
-        launchTimer = new Timer();
+        timer = new Timer();
 
-        launchTimer.startTimer(timerTag, fireRate);
+        timer.startTimer(launchTimerTag, fireRate);
+        timer.startTimer(difficultyDelayTag, difficultyIncreaseDelay);
 	}
 	
 	void Update ()
     {
-        launchTimer.update(Time.deltaTime);
+        timer.update(Time.deltaTime);
 
         //if firerate delay is up
-        if(launchTimer.checkIfCompleted(timerTag))
+        if(timer.checkIfCompleted(launchTimerTag))
         {
-            if (dewit)
-                fireObstacle();
-            else
-                fireMeme();
+            fire();
 
             //start next delay
-            launchTimer.startTimer(timerTag, fireRate);
+            timer.startTimer(launchTimerTag, fireRate);
+        }
+
+        //increment difficulty
+        if(difficultyLevel < maxDifficulty && timer.checkIfCompleted(difficultyDelayTag))
+        {
+            ++difficultyLevel;
+
+            if(difficultyLevel != maxDifficulty)
+            {
+                timer.startTimer(difficultyDelayTag, difficultyIncreaseDelay);
+            }
         }
 	}
+
+    void fire()
+    {
+        int obstacleCheck = Random.Range(1, 11);
+
+        Debug.Log(obstacleCheck);
+
+        if(obstacleCheck <= difficultyLevel)
+            fireObstacle();
+        else
+            fireMeme();
+    }
 
     void fireMeme()
     {
@@ -73,6 +100,7 @@ public class MemeLauncher : MonoBehaviour
 
         newMover.init(firePos, fireSpeed, projectileGravity, angleOfElevation);
     }
+
     Vector2 getPointAlongHitbox()
     {
         // Ray/Line equation: R(t) = A + (B-A) * t 

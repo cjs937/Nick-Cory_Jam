@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum AudioType
 {
-    LARRY_MUSIC
+    TRASH,
+    PLAYER_HIT
 }
 
 [System.Serializable]

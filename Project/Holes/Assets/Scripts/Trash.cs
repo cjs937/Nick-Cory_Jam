@@ -6,10 +6,10 @@ using UnityEngine;
 public class Trash : MonoBehaviour
 {
     public MemeCatcher player;
-    public AudioClip trashSound;
+    //public AudioClip trashSound;
     public int trashedCount;
 
-    AudioSource audioSource;
+    //AudioSource audioSource;
     bool playerInRange = false;
 
 	public ScoreKeeperScript Score;
@@ -17,8 +17,8 @@ public class Trash : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = trashSound;
+        //audioSource = GetComponent<AudioSource>();
+        //audioSource.clip = trashSound;
 
         trashedCount = 0;
 	}
@@ -30,7 +30,7 @@ public class Trash : MonoBehaviour
         {
             if(player.throwAwayTop())
 			{
-                audioSource.Play();
+                AudioSystem.playLocalAudio(AudioType.TRASH, transform.position, 100);
 
                 trashedCount++;
 				Score.IncrementScore();  //can add a float in the argument for a custom val

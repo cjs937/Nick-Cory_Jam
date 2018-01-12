@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MemeCatcher : MonoBehaviour, IListener
 {
+    public int memeLimit;
+
     //position where caught memes will go
     public Transform carryPosition;
 
-    Stack<Meme> heldMemes;
+    public Stack<Meme> heldMemes;
     BoxCollider2D hitBox;
 
     //Distance above player that memes increment by
@@ -61,7 +63,8 @@ public class MemeCatcher : MonoBehaviour, IListener
         if (heldMemes.Contains(_caughtMeme))
             return;
 
-        if (_caughtMeme.onCatch(this))
+        //onCatch will return false if meme is an obstacle
+        if (_caughtMeme.onCatch(this) && heldMemes.Count < memeLimit)
         {
             _caughtMeme.transform.position = carryPosition.position;
 
@@ -69,12 +72,19 @@ public class MemeCatcher : MonoBehaviour, IListener
 
             _caughtMeme.transform.parent = transform;
 
+            if(heldMemes.Count > 0)
+                _caughtMeme.spriteRenderer.sortingOrder = heldMemes.Peek().spriteRenderer.sortingOrder + 1;
+
             heldMemes.Push(_caughtMeme);
 
             updateCarryPosition();
         }
         else
+        {
+            AudioSystem.playLocalAudio(AudioType.PLAYER_HIT, transform.position, 100);
+
             dropAllMemes();
+        }
     }
 
     void updateCarryPosition()

@@ -6,6 +6,7 @@ public class PlayerMover : MonoBehaviour
 {
     //Speed when player isn't carrying any memes
     public float baseSpeed;
+    public float minSpeed;
 
     //Clamps player to screen
     public Vector2[] clampPositions = new Vector2[2] { Vector2.zero, Vector2.zero };
@@ -13,7 +14,9 @@ public class PlayerMover : MonoBehaviour
     //% cut in speed when player cathces meme
     public float speedDecreasePercent;
 
-    float currentSpeed;
+    public float currentSpeed;
+
+    MemeCatcher catcher;
     Rigidbody2D physics = null;
 
     BoxCollider2D hitBox = null;
@@ -30,6 +33,7 @@ public class PlayerMover : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        catcher = GetComponent<MemeCatcher>();
         physics = GetComponent<Rigidbody2D>();
         hitBox = GetComponent<BoxCollider2D>();
         currentSpeed = baseSpeed;
@@ -38,12 +42,22 @@ public class PlayerMover : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        updateSpeed();
+
         //if (Input.GetKey(KeyCode.Mouse0) && Utility.checkInBounds(Utility.getMousePosition(), hitBox))
         //{
             lerpToMouse();
             //snapToMouse();
         //}
 	}
+
+    void updateSpeed()
+    {
+        float memeWeight = catcher.heldMemes.Count * (baseSpeed * (speedDecreasePercent / 100));
+
+        //clamps to minimum speed
+        currentSpeed = Mathf.Max(baseSpeed - memeWeight, minSpeed);
+    }
 
     void snapToMouse()
     {

@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class MemeLauncher : MonoBehaviour
 {
-    public bool dewit;
-
     public float difficultyIncreaseDelay;
     public int maxDifficulty;
 
     public float fireRate;
+    public float minFireRate;
+    public float fireRateDecayPercent;
+
     public float fireSpeed;
     public float projectileGravity;
 
     public GameObject memePrefab;
     public GameObject obstaclePrefab;
 
-    public int difficultyLevel = 1;
+    int difficultyLevel = 1;
 
     BoxCollider2D hitBox;
     string difficultyDelayTag = "diffDelay";
@@ -50,14 +51,23 @@ public class MemeLauncher : MonoBehaviour
         //increment difficulty
         if(difficultyLevel < maxDifficulty && timer.checkIfCompleted(difficultyDelayTag))
         {
-            ++difficultyLevel;
+            increaseDifficulty();
 
-            if(difficultyLevel != maxDifficulty)
+            if (difficultyLevel != maxDifficulty)
             {
                 timer.startTimer(difficultyDelayTag, difficultyIncreaseDelay);
             }
         }
 	}
+    
+    void increaseDifficulty()
+    {
+        ++difficultyLevel;
+
+        fireRate -= fireRate * (fireRateDecayPercent / 100);
+
+        fireRate = Mathf.Max(fireRate, minFireRate);
+    }
 
     void fire()
     {

@@ -893,16 +893,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1143ac767d5aec549ba3351ee7ecf7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dewit: 0
   difficultyIncreaseDelay: 10
   maxDifficulty: 7
   fireRate: 1
+  minFireRate: 0.2
+  fireRateDecayPercent: 50
   fireSpeed: 10
   projectileGravity: 31
   memePrefab: {fileID: 1691854558366552, guid: 2c3780b2a3330c44c90d2ea105c2a673, type: 2}
   obstaclePrefab: {fileID: 1379886666012510, guid: c7e3a3a0748fe3245b6e65831ef6fbef,
     type: 2}
-  difficultyLevel: 1
 --- !u!61 &2108609655
 BoxCollider2D:
   m_ObjectHideFlags: 0

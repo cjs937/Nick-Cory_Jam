@@ -64,8 +64,11 @@ public class MemeCatcher : MonoBehaviour, IListener
             return;
 
         //onCatch will return false if meme is an obstacle
-        if (_caughtMeme.onCatch(this) && heldMemes.Count < memeLimit)
+        if (_caughtMeme.onCatch(this))
         {
+            if (heldMemes.Count >= memeLimit)
+                return;
+
             _caughtMeme.transform.position = carryPosition.position;
 
             _caughtMeme.transform.rotation = Quaternion.Euler(Vector3.zero);

@@ -34,6 +34,9 @@ public class Meme : MonoBehaviour
 
     public virtual bool onCatch(MemeCatcher _catcher)
     {
+        if (_catcher.heldMemes.Count >= _catcher.memeLimit)
+            return true;
+
         ProjectileMover mover = GetComponent<ProjectileMover>();
 
         if(mover != null)
